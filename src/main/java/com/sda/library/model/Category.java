@@ -14,11 +14,13 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private Set<Book> books;
 
+
     public Category(String name){
         this.name = name;
     }
 
     public Category(){}
+
 
     public Long getId() {
         return id;
@@ -43,4 +45,6 @@ public class Category {
     public void setBooks(Set<Book> books) {
         this.books = books;
     }
+
+
 }

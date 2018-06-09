@@ -16,12 +16,14 @@ public class Author {
     @ManyToMany(mappedBy = "authors")
     private Set<Book> books;
 
+
     public Author(String name, String lastname) {
         this.name = name;
         this.lastname = lastname;
     }
 
     public Author(){}
+
 
     public Long getId() {
         return id;
