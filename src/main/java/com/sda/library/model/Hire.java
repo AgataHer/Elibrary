@@ -18,10 +18,13 @@ public class Hire {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = "rent_date")
     private Date rentDate;
 
+    @Column(name = "reservation_date")
     private Date reservationDate;
 
+    @Column(name = "return_date")
     private Date returnDate;
 
     @ManyToOne(cascade = CascadeType.ALL)

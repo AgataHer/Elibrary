@@ -12,8 +12,12 @@ import java.util.List;
 @RestController
 public class HireController {
 
-    @Autowired
     private HireService hireService;
+
+    @Autowired
+    public HireController(HireService hireService){
+        this.hireService = hireService;
+    }
 
     @RequestMapping(value = "/hires", method = RequestMethod.GET)
     public List<Hire> showHires() {
