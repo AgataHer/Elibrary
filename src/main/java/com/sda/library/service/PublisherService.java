@@ -10,7 +10,6 @@ import java.util.List;
 
 @Service
 public class PublisherService {
-
     private PublisherRepository publisherRepository;
 
     @Autowired

@@ -11,10 +11,10 @@ import java.util.List;
 @Service
 public class BookService {
 
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository) {
+    public BookService(final BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
@@ -27,6 +27,7 @@ public class BookService {
     }
 
     public Book getBookById(Long id) {
+
         Book book = bookRepository.findById(id).orElseThrow(
                 () -> new BookNotFoundException(id)
         );

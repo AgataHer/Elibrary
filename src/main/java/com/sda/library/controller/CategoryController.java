@@ -13,9 +13,12 @@ import java.util.List;
 public class CategoryController {
 
 
-    @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @RequestMapping(value = "/categories")
     public List<Category> showCategories() {
