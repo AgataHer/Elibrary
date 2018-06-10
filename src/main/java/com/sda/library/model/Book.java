@@ -21,8 +21,6 @@ public class Book {
 
     private String subtitle;
 
-    private String isbn;
-
     @ManyToOne(cascade = CascadeType.ALL)
     private Category category;
 
@@ -55,6 +53,7 @@ public class Book {
     @Column(name = "cover_link")
     private String coverLink;
 
+    // kompletny json pozyskany z publicznego API
     @Column(name = "json_info")
     private String jsonInfo;
 
