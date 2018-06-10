@@ -61,7 +61,6 @@ public class Book {
     public Book(String title, String subtitle, String isbn, Category category, Set<Author> authors, Publisher publisher, String selfLink, Integer publishedDate, String isbn10, String isbn13, Integer pageCount, String language, String coverLink, String jsonInfo) {
         this.title = title;
         this.subtitle = subtitle;
-        this.isbn = isbn;
         this.category = category;
         this.authors = authors;
         this.publisher = publisher;
