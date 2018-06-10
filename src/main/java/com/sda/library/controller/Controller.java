@@ -20,21 +20,19 @@ public class Controller {
     private CategoryService categoryService;
     @Autowired
     private PublisherService publisherService;
+    @Autowired
+    private UserService userService;
 
 
-    @RequestMapping(value = "/authors", method = RequestMethod.GET)
-    public List<Author> showAuthors() {
-        return authorService.getAuthors();
-    }
+
+
+
+
+
 
     @RequestMapping(value = "/books"/*, method = RequestMethod.GET*/)
     public List<Book> showBooks() {
         return bookService.getBooks();
-    }
-
-    @RequestMapping(value = "/categories")
-    public List<Category> showCategories() {
-        return categoryService.getCategories();
     }
 
     @RequestMapping(value = "/book", method = RequestMethod.POST)
@@ -43,10 +41,22 @@ public class Controller {
         return bookService.save(book);
     }
 
+
+    @RequestMapping(value = "/categories")
+    public List<Category> showCategories() {
+        return categoryService.getCategories();
+    }
+
     @RequestMapping(value = "/category", method = RequestMethod.POST)
     public Category addCategory(
             @RequestBody Category category) {
         return categoryService.save(category);
+    }
+
+
+    @RequestMapping(value = "/authors", method = RequestMethod.GET)
+    public List<Author> showAuthors() {
+        return authorService.getAuthors();
     }
 
     @RequestMapping(value = "/author", method = RequestMethod.POST)
