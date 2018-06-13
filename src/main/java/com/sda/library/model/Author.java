@@ -7,6 +7,10 @@ import java.util.Set;
 @Table(name = "authors")
 public class Author {
 
+    /**
+     * This class determine data types storing in table authors, including names of book authors
+     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

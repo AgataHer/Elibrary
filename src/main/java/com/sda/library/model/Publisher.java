@@ -7,6 +7,10 @@ import java.util.Set;
 @Table(name = "publishers")
 public class Publisher {
 
+    /**
+     * This class determine data types storing in table publishers, including publishers' name & address
+     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

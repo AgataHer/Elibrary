@@ -6,17 +6,25 @@ import java.util.Set;
 @Entity
 @Table(name = "categories")
 public class Category {
+
+    /**
+     * This class determine data types storing in table categories, including names of book authors
+     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private String alias;
 
-    @OneToMany(mappedBy = "category")
+    @ManyToMany(mappedBy = "categories")
     private Set<Book> books;
 
 
-    public Category(String name){
+    public Category(String name, String alias, Set<Book> books) {
         this.name = name;
+        this.alias = alias;
+        this.books = books;
     }
 
     public Category(){}
@@ -38,13 +46,19 @@ public class Category {
         this.name = name;
     }
 
-    public Set<Book> giveBooks() {
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+
+    public Set<Book> getBooks() {
         return books;
     }
 
     public void setBooks(Set<Book> books) {
         this.books = books;
     }
-
-
 }
