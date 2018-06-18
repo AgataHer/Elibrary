@@ -13,8 +13,10 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public UserController (UserService userService) {this.userService = userService;}
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<User> showUsers() {
