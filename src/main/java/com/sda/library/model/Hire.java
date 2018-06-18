@@ -3,9 +3,7 @@ package com.sda.library.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
-import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,13 +17,13 @@ public class Hire {
     private Long id;
 
     @Column(name = "rent_date")
-    private Date rentDate;
+    private Long rentDate;
 
     @Column(name = "reservation_date")
-    private Date reservationDate;
+    private Long reservationDate;
 
     @Column(name = "return_date")
-    private Date returnDate;
+    private Long returnDate;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Book book;
