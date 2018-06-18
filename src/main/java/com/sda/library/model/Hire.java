@@ -27,7 +27,7 @@ public class Hire {
     @Column(name = "return_date")
     private Date returnDate;
 
-    @ManyToOne(cascade = CascadeType.ALL) //TODO: dodać drugą część relacji w klasie Book
+    @ManyToOne(cascade = CascadeType.ALL)
     private Book book;
 
     @ManyToOne(cascade = CascadeType.ALL) //TODO: dodać drugą część relacji w klasie User

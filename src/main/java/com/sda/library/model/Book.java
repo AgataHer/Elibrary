@@ -1,13 +1,7 @@
 package com.sda.library.model;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.Set;
-
-@Setter
-@Getter
 
 @Entity
 @Table(name = "books")
@@ -69,10 +63,16 @@ public class Book {
 
     private String description;
 
+    @Column(name = "state_of_book")
+    private StateOfBook stateOfBook;
+
+    @OneToMany(mappedBy = "book")
+    private Set<Hire> hire;
+
 
     public Book(String title, String subtitle, Set<Category> categories, Set<Author> authors, Publisher publisher,
                 String selfLink, Integer publishedDate, String isbn10, String isbn13, Integer pageCount, String language,
-                String coverLink, String jsonInfo, String description) {
+                String coverLink, String jsonInfo, String description, StateOfBook stateOfBook, Set<Hire> hire) {
         this.title = title;
         this.subtitle = subtitle;
         this.categories = categories;
@@ -87,6 +87,8 @@ public class Book {
         this.coverLink = coverLink;
         this.jsonInfo = jsonInfo;
         this.description = description;
+        this.stateOfBook = stateOfBook;
+        this.hire = hire;
     }
 
     public Book(){
@@ -211,5 +213,21 @@ public class Book {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public StateOfBook getStateOfBook() {
+        return stateOfBook;
+    }
+
+    public void setStateOfBook(StateOfBook stateOfBook) {
+        this.stateOfBook = stateOfBook;
+    }
+
+    public Set<Hire> getHire() {
+        return hire;
+    }
+
+    public void setHire(Set<Hire> hire) {
+        this.hire = hire;
     }
 }
