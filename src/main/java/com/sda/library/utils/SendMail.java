@@ -11,7 +11,7 @@ public class SendMail {
 
     static private PropertyRepository propertyRepository;
 
-    public static boolean SendGmain(String receiver, String theme, String message) {
+    public static boolean SendGmail(String receiver, String theme, String message) {
         final String username = Config.mailUsername;
         final String password = Config.mailPassword;
         boolean done = false;
