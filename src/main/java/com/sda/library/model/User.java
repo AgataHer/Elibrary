@@ -1,119 +1,106 @@
 package com.sda.library.model;
 
-import javax.persistence.*;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.Transient;
+
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    private String name;
-    private String lastname;
-    private String email;
-    private String password;
-    private String address;
-    private String postalcode;
-    private String phone;
-    private int role;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "user_id")
+	private int id;
+	@Column(name = "email")
+	@Email(message = "*Please provide a valid Email")
+	@NotEmpty(message = "*Please provide an email")
+	private String email;
+	@Column(name = "password")
+	@Length(min = 5, message = "*Your password must have at least 5 characters")
+	@NotEmpty(message = "*Please provide your password")
+	@Transient
+	private String password;
+	@Column(name = "name")
+	@NotEmpty(message = "*Please provide your name")
+	private String name;
+	@Column(name = "last_name")
+	@NotEmpty(message = "*Please provide your last name")
+	private String lastName;
+	@Column(name = "active")
+	private int active;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles;
 
+	public int getId() {
+		return id;
+	}
 
-    public User() {
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public User(String name, String lastname, String email, String password, String address, String postalcode, String phone, int role) {
-        this.name = name;
-        this.lastname = lastname;
-        this.email = email;
-        this.password = password;
-        this.address = address;
-        this.postalcode = postalcode;
-        this.phone = phone;
-        this.role = role;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public String getLastname() {
-        return lastname;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public int getActive() {
+		return active;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setActive(int active) {
+		this.active = active;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public Set<Role> getRoles() {
+		return roles;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPostalcode() {
-        return postalcode;
-    }
-
-    public void setPostalcode(String postalcode) {
-        this.postalcode = postalcode;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public int getRole() {
-        return role;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 }

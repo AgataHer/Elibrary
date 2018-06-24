@@ -1,7 +1,6 @@
 package com.sda.library.config;
 
 import com.sda.library.model.Property;
-import javafx.beans.property.ReadOnlyDoubleWrapper;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

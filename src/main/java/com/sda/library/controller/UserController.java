@@ -22,6 +22,7 @@ public class UserController {
     @Autowired
     public UserController (UserService userService) {this.userService = userService;}
 
+/*
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<User> showUsers() {
         return userService.getUsers();
@@ -75,5 +76,5 @@ public class UserController {
         }
         return modelAndView;
     }
-
+*/
 }
