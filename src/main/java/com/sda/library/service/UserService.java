@@ -15,18 +15,27 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    public UserService (UserRepository userRepository) {this.userRepository = userRepository;}
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-    public List<User> getUsers() {return userRepository.findAll();}
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
 
-    public User savae(User user) {return userRepository.save(user);}
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 
-    public User getUserById (Long id){
-
+    public User findUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(
                 () -> new UserNotFoundException(id)
         );
         return user;
     }
 
+    public User findUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return user;
+    }
 }

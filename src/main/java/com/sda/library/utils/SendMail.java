@@ -1,5 +1,6 @@
 package com.sda.library.utils;
 
+import com.sda.library.config.Config;
 import com.sda.library.repository.PropertyRepository;
 
 import javax.mail.*;

@@ -1,4 +1,4 @@
-package com.sda.library.utils;
+package com.sda.library.config;
 
 import com.sda.library.model.Property;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
@@ -12,7 +12,7 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+// TODO zmienić na obsługę pliku konfiguracyjnego
 public class Config {
     private static final SessionFactory sessionFactory;
     private static List<Property> properties = new ArrayList<>();

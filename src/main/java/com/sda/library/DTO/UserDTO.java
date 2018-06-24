@@ -1,6 +1,5 @@
-package com.sda.library.DTO;
+package com.sda.library.dto;
 
-import com.sda.library.model.TypesOfUsers;
 import lombok.Data;
 
 @Data
@@ -12,5 +11,5 @@ public class UserDTO {
     private String address;
     private String postalcode;
     private String phone;
-    private TypesOfUsers typesOfUsers; //TODO: przepisać metody z UserService aby używały UserDTO
+    private int role;
 }

@@ -1,12 +1,10 @@
 package com.sda.library.model;
 
-import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -14,26 +12,37 @@ public class User {
     private int id;
     private String name;
     private String lastname;
-    private String mail;
+    private String email;
     private String password;
     private String address;
     private String postalcode;
     private String phone;
-    private String role;
+    private int role;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 
 
-    public User (String name, String lastname, String mail, String password, String address, String postalcode, String phone){
+    public User() {
+    }
+
+    public User(String name, String lastname, String email, String password, String address, String postalcode, String phone, int role) {
         this.name = name;
         this.lastname = lastname;
-        this.mail = mail;
+        this.email = email;
         this.password = password;
         this.address = address;
         this.postalcode = postalcode;
         this.phone = phone;
+        this.role = role;
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -52,12 +61,12 @@ public class User {
         this.lastname = lastname;
     }
 
-    public String getMail() {
-        return mail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -92,11 +101,19 @@ public class User {
         this.phone = phone;
     }
 
-    public String getRole() {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(int role) {
         this.role = role;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
