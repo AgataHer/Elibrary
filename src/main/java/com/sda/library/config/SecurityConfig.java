@@ -26,8 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    //@Value("${spring.queries.users-query}")
-    @Value("SELECT * FROM user where email = ?")
+    @Value("${spring.queries.users-query}")
     private String usersQuery;
 
     @Value("${spring.queries.roles-query}")
@@ -50,19 +49,41 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setEncoding("UTF-8");
         filter.setForceEncoding(true);
         http.
+//                authorizeRequests()
+//                .antMatchers("/").permitAll()
+//                .antMatchers("/login").permitAll()
+//                .antMatchers("/registration").permitAll()
+//                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
+//                .authenticated().and().csrf().disable().formLogin()
+//                .loginPage("/login").failureUrl("/login?error=true")
+//                .defaultSuccessUrl("/admin/home")
+//                .usernameParameter("email")
+//                .passwordParameter("password")
+//                .and().logout()
+//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+//                .logoutSuccessUrl("/").and().exceptionHandling()
+//                .accessDeniedPage("/access-denied");
                 authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-                .authenticated().and().csrf().disable().formLogin()
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/service/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers("/elibrary/**").hasAnyAuthority("ADMIN", "USER", "CLIENT")
+                .anyRequest()
+                .authenticated()
+            .and()
+                .csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/admin/home")
+                .defaultSuccessUrl("/elibrary/index")
+                //.defaultSuccessUrl("/admin/home")
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .and().logout()
+            .and()
+                .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").and().exceptionHandling()
+                .logoutSuccessUrl("/")
+            .and().exceptionHandling()
                 .accessDeniedPage("/access-denied");
 
         http.addFilterBefore(filter, CsrfFilter.class);

@@ -59,7 +59,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/admin/home", method = RequestMethod.GET)
-	public ModelAndView home(){
+	public ModelAndView adminHome(){
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
@@ -68,6 +68,16 @@ public class LoginController {
 		modelAndView.setViewName("admin/home");
 		return modelAndView;
 	}
-	
+
+	@RequestMapping(value="/elibrary/index", method = RequestMethod.GET)
+	public ModelAndView home(){
+		ModelAndView modelAndView = new ModelAndView();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+		modelAndView.addObject("userMessage","Content Available Only for Users");
+		modelAndView.setViewName("elibrary/index");
+		return modelAndView;
+	}
 
 }

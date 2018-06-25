@@ -6,12 +6,15 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 // TODO zmienić na obsługę pliku konfiguracyjnego
+
 public class Config {
     private static final SessionFactory sessionFactory;
     private static List<Property> properties = new ArrayList<>();
