@@ -7,11 +7,90 @@
     <title>eLibrary</title>
     <!-- Latest compiled and minified Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <style>
+        .center-block {
+            float: none;
+        }
+    </style>
 </head>
-<body ng-app>
-    {{4+4}}
-    
+<body ng-app="bookBrowser" ng-controller="booksCtrl">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 center-block">
+                <h1 class="text-center">Lista dostępnych książek eLibrary</h1>
+                <div class="text-left">Ilość pozycji w bazie danych: {{foundBooks.length}}</div>
+                <br/>
+                <div class="input-group">
+                    <span class="input-group-addon">Szukaj: </span>
+                    <input type="text" class="form-control" placeholder="Czego szukasz?" ng-model="finder">
+                </div>
+                <br/>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th ng-repeat="header in [
+                                    'Imię', 'Narodowość', 'Miejsce', 'Punkty'
+                                    ]">
+                                    {{header}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat='book in foundBooks | filter: finder'>
+                                <td>
+                                    {{book.Name}}
+                                </td>
+                                <td>
+                                    {{book.Nation}}
+                                </td>
+                                <td>
+                                    {{book.rank}}
+                                </td>
+                                <td>
+                                    {{book.pts}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/angular.min.js"></script>
+    <script>
+        var bBrowser = angular.module('bookBrowser', []);
+        bBrowser.controller('booksCtrl', ['$scope', '$filter', function($scope, $filter){
+            $scope.foundBooks = [
+{
+"Name":"FREUND Severin",
+"Nation":"GER",
+"rank":1,
+"pts":1729
+},
+{
+"Name":"PREVC Peter",
+"Nation":"SLO",
+"rank":2,
+"pts":1720
+},
+{
+"Name":"KRAFT Stefan",
+"Nation":"AUT",
+"rank":3,
+"pts":1578
+},
+{
+"Name":"FANNEMEL Anders",
+"Nation":"NOR",
+"rank":4,
+"pts":1161
+}
+]
+        }]);
+    </script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </body>
