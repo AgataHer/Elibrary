@@ -1,20 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=l">
     <title>eLibrary</title>
-    <!-- Latest compiled and minified Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <style>
         .center-block {
             float: none;
         }
+        .buttons {
+            padding: 5px 10px 5px 10px;
+            background: #1b6d85;
+            color: white;
+        }
     </style>
 </head>
 <body ng-app="bookBrowser" ng-controller="booksCtrl">
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/jquery-3.3.1.js"></script>
+    <script src="/js/bootstrap.js"></script>
     <div class="container">
         <div class="row">
             <div class="col-sm-8 center-block">
@@ -58,8 +66,11 @@
             </div>
         </div>
     </div>
+    <div>
+        <a href="/add_book" class="buttons">Dodaj książkę</a>
+        <button ng-click="redirect()">Basic</button>
+    </div>
 
-    <script src="js/angular.min.js"></script>
     <script>
         var bBrowser = angular.module('bookBrowser', []);
         bBrowser.controller('booksCtrl', ['$scope', '$filter', function($scope, $filter){
@@ -91,7 +102,6 @@
 ]
         }]);
     </script>
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
 </body>
 </html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=l">
+    <title>eLibrary</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <style>
+        .center-block {
+            float: none;
+        }
+        button {
+            padding: 3px 20px 3px 20px;
+            margin: 10px 15px 10px 15px; 
+        }
+        body {
+            background: url(../../images/library_mafra.jpg) no-repeat center center fixed; background-size: cover;
+        }
+        title_cola {
+            text-align: right;
+            background: green;
+        }
+        enter_col {
+            width: max;
+            background: yellow;
+        }
+        textarea {
+            resize: none;
+        }
+    </style>
+</head>
+<body>
+    <script src="/js/angular.min.js"></script>
+    <script src="/js/jquery-3.3.1.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <br/><br/><br/>
+    <div class="container" ng-app="addBook" ng-controller="addBookCtrl"  style="background: white; width: 75%; opacity: 0.9;">
+        <h1 class="text-center">Dodanie książki</h1>
+        <form novalidate>
+            <div class="container">
+                <div class="row" style="height: 40px">
+                    <div class="col-lg-1" style="title_col">
+                        Tytuł:
+                    </div>
+                    <div class="col-lg-11">
+                        <input type="text" ng-model="book.title" class="form-control" placeholder="Wprowadź tytuł">
+                    </div>
+                </div>
+                <div class="row" style="height: 40px">
+                    <div class="col-lg-1" style="title_cola">
+                        Podtytuł:
+                    </div>
+                    <div class="col-lg-11">
+                        <input type="text" ng-model="book.subtitle" class="form-control" placeholder="Wprowadź podtytuł">
+                    </div>
+                </div>
+            <!--author-->
+                <div class="row" style="height: 40px">
+                    <div class="col-lg-1" style="title_col">
+                        Wydawca:
+                    </div>
+                    <div class="col-lg-11">
+                        <input type="text" ng-model="book.publisher" class="form-control" placeholder="Wprowadź wydawcę">
+                    </div>
+                </div>
+                <div class="row" style="height: 40px">
+                    <div class="col-lg-1" style="title_col">
+                        Rok wydania:
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="number" ng-model="book.publishedDate" class="form-control" placeholder="Wprowadź rok wydania">
+                    </div>
+                </div>
+                <div class="row" style="height: 40px">
+                    <div class="col-lg-1" style="title_col">
+                        ISBN(13):
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" ng-model="book.isbn13" class="form-control" placeholder="Numer ISBN (13 cyfr)">
+                    </div>
+                    <div class="col-lg-9">
+                        <button ng-click="getBookByISBN()" class="button">Pobierz dane z internetu</button>
+                    </div>
+                </div>
+                <div class="row" style="height: 40px">
+                    <div class="col-lg-1" style="title_col">
+                        ISBN(10):
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" ng-model="book.isbn10" class="form-control" placeholder="Numer ISBN (10 cyfr)">
+                    </div>
+                </div>
+                <div class="row" style="height: 40px">
+                    <div class="col-lg-1" style="title_col">
+                        Ilość stron:
+                    </div>
+                    <div class="col-lg-2">
+                        <input type= "number"date"" ng-model="book.pageCount" class="form-control" placeholder="Wprowadź ilość stron">
+                    </div>
+                </div>
+                <div class="row" style="height: 40px">
+                    <div class="col-lg-1" style="title_col">
+                        Język:
+                    </div>
+                    <div class="col-lg-2">
+                        <input type="text" ng-model="book.language" class="form-control" placeholder="Język tekstu (pl, en, de, itd.)">
+                    </div>
+                </div>
+            <!--coverLink-->
+                <div class="row">
+                    <div class="col-lg-1" style="title_col">
+                        Opis:
+                    </div>
+                    <div class="col-lg-11">
+                        <textarea type="text" ng-model="book.description" class="form-control" placeholder="Wprowadź opis" rows="5"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <br><br>
+            <button ng-click="add()" class="button">Dodaj</button>
+            <button ng-click="reset()">Resetuj</button>
+            <button ng-click="cancel()">Anuluj</button>
+            </form>
+        <p>form = {{book}}</p>
+        <p>master = {{master}}</p>
+    </div>
+
+<script>
+var app = angular.module('addBook', []);
+app.controller('addBookCtrl', function($scope) {
+    $scope.master = {title: "Pan Tadeusz", subtitle: "Ostatni zajazd na Litwie", stateOfBook: "Do wypożyczenia", publisher: "Zakład Narodowy im. Ossolińskich", publishedDate: 1980, isbn10: "8304004461", isbn13: "9788304004467", pageCount: 647, language: "pl", description: "Pan Tadeusz, czyli Ostatni zajazd na Litwie – poemat epicki Adama Mickiewicza wydany w dwóch tomach w 1834 w Paryżu przez Aleksandra Jełowickiego. Ta epopeja narodowa z elementami gawędy szlacheckiej powstała w latach 1832–1834 w Paryżu. Składa się z dwunastu ksiąg pisanych wierszem, trzynastozgłoskowym aleksandrynem polskim. Czas akcji: pięć dni z roku 1811 i dwa dni z roku 1812. Epopeja jest stałą pozycją na polskiej liście lektur szkolnych. W 2012 była publicznie odczytywana w akcji społecznej propagującej znajomość literatury polskiej Narodowe Czytanie Pana Tadeusza. W 2014 roku rękopis „Pana Tadeusza” został wpisany na Polską Listę Krajową Programu UNESCO Pamięć Świata"};
+    $scope.states = ["Wypożyczona", "Do wypożyczenia", "Zagubiona", "Niedostępna", "Zarezerwowana", "Propozycja"];
+    $scope.add = function() {
+        // $scope.book = angular.copy($scope.master);
+    };
+    $scope.reset = function() {
+        $scope.book = angular.copy($scope.master);
+    };
+    $scope.cancel = function() {
+        // book.language="pl";
+        $location.url(/elibrary/index.html);
+    };
+    // $scope.reset();
+});
+</script>
+
+</body>
+</html>
+
+<!--
+    private String title;
+    private String subtitle;
+    private Set<Category> categories;
+    private Set<Author> authors;
+    private Publisher publisher;
+    private Integer publishedDate;
+    private String isbn10;
+    private String isbn13;
+    private Integer pageCount;
+    private String language;
+    private String coverLink;
+    private String description;
+    private StateOfBook stateOfBook;
+-->
+        
