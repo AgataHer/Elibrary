@@ -9,23 +9,12 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
     <style>
-        .center-block {
-            float: none;
-        }
         button {
             padding: 3px 20px 3px 20px;
             margin: 10px 15px 10px 15px; 
         }
         body {
             background: url(../../images/library_mafra.jpg) no-repeat center center fixed; background-size: cover;
-        }
-        title_cola {
-            text-align: right;
-            background: green;
-        }
-        enter_col {
-            width: max;
-            background: yellow;
         }
         textarea {
             resize: none;
@@ -43,32 +32,32 @@
         <form novalidate>
             <div class="container">
                 <div class="row" style="height: 40px">
-                    <div class="col-lg-1" style="title_col">
+                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
                         Tytuł:
                     </div>
-                    <div class="col-lg-11">
+                    <div class="col-lg-10">
                         <input type="text" ng-model="book.title" class="form-control" placeholder="Wprowadź tytuł">
                     </div>
                 </div>
                 <div class="row" style="height: 40px">
-                    <div class="col-lg-1" style="title_cola">
+                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
                         Podtytuł:
                     </div>
-                    <div class="col-lg-11">
+                    <div class="col-lg-10">
                         <input type="text" ng-model="book.subtitle" class="form-control" placeholder="Wprowadź podtytuł">
                     </div>
                 </div>
             <!--author-->
                 <div class="row" style="height: 40px">
-                    <div class="col-lg-1" style="title_col">
+                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
                         Wydawca:
                     </div>
-                    <div class="col-lg-11">
+                    <div class="col-lg-10">
                         <input type="text" ng-model="book.publisher" class="form-control" placeholder="Wprowadź wydawcę">
                     </div>
                 </div>
                 <div class="row" style="height: 40px">
-                    <div class="col-lg-1" style="title_col">
+                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
                         Rok wydania:
                     </div>
                     <div class="col-lg-2">
@@ -76,34 +65,34 @@
                     </div>
                 </div>
                 <div class="row" style="height: 40px">
-                    <div class="col-lg-1" style="title_col">
+                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
                         ISBN(13):
                     </div>
                     <div class="col-lg-2">
                         <input type="text" ng-model="book.isbn13" class="form-control" placeholder="Numer ISBN (13 cyfr)">
                     </div>
-                    <div class="col-lg-9">
+                    <div class="col-lg-8">
                         <button ng-click="getBookByISBN()" class="button">Pobierz dane z internetu</button>
                     </div>
                 </div>
                 <div class="row" style="height: 40px">
-                    <div class="col-lg-1" style="title_col">
+                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
                         ISBN(10):
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-lg-3">
                         <input type="text" ng-model="book.isbn10" class="form-control" placeholder="Numer ISBN (10 cyfr)">
                     </div>
                 </div>
                 <div class="row" style="height: 40px">
-                    <div class="col-lg-1" style="title_col">
+                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
                         Ilość stron:
                     </div>
                     <div class="col-lg-2">
-                        <input type= "number"date"" ng-model="book.pageCount" class="form-control" placeholder="Wprowadź ilość stron">
+                        <input type= "number" ng-model="book.pageCount" class="form-control" placeholder="Wprowadź ilość stron">
                     </div>
                 </div>
                 <div class="row" style="height: 40px">
-                    <div class="col-lg-1" style="title_col">
+                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
                         Język:
                     </div>
                     <div class="col-lg-2">
@@ -112,11 +101,11 @@
                 </div>
             <!--coverLink-->
                 <div class="row">
-                    <div class="col-lg-1" style="title_col">
+                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
                         Opis:
                     </div>
-                    <div class="col-lg-11">
-                        <textarea type="text" ng-model="book.description" class="form-control" placeholder="Wprowadź opis" rows="5"></textarea>
+                    <div class="col-lg-10">
+                        <textarea type="text" ng-model="book.description" class="form-control" placeholder="Wprowadź opis" rows="6"></textarea>
                     </div>
                 </div>
             </div>
@@ -125,6 +114,7 @@
             <button ng-click="add()" class="button">Dodaj</button>
             <button ng-click="reset()">Resetuj</button>
             <button ng-click="cancel()">Anuluj</button>
+    <a href="/elibrary/index" class="buttons">Rezygnuj</a>
             </form>
         <p>form = {{book}}</p>
         <p>master = {{master}}</p>
