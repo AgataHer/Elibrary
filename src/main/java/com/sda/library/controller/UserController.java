@@ -78,10 +78,10 @@ public class UserController {
 @RequestMapping(value="/changeUserData", method = RequestMethod.GET)
 public ModelAndView changeUserData(){
     ModelAndView modelAndView = new ModelAndView();
-    Long id = 1L; //TODO z ciasteczka trzeba będzie odczytać id usera na razie na sztywno wpisany id
-    Optional<User> user = userService.findUserById(id);
-    if(user.isPresent()){
-        modelAndView.addObject("user", user.get());
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    User user = userService.findUserByEmail(auth.getName());
+    if(user!= null){
+        modelAndView.addObject("user", user);
     }
     modelAndView.setViewName("changeUserData");
     return modelAndView;
