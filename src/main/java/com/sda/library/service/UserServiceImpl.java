@@ -2,6 +2,7 @@ package com.sda.library.service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,4 +37,18 @@ public class UserServiceImpl implements UserService{
 		userRepository.save(user);
 	}
 
+	@Override
+	public Optional<User> findUserById(Long id) {
+		return userRepository.findById(id);
+	}
+
+	@Override
+	public void updateUserData(User user) {
+		user.setId(userRepository.findByEmail(user.getEmail()).getId());
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		user.setActive(1);
+		Role userRole = roleRepository.findByRole("ADMIN");
+		user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+		userRepository.setUserDataById(user.getName(),user.getLastName(), user.getPassword(), user.getId());
+	}
 }

@@ -2,6 +2,7 @@ package com.sda.library.controller;
 
 import com.sda.library.model.User;
 import com.sda.library.service.UserService;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,17 +11,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserController {
-
-    private UserService userService;
-
     @Autowired
-    public UserController (UserService userService) {this.userService = userService;}
+    private UserService userService;
 
 /*
     @RequestMapping(value = "/users", method = RequestMethod.GET)
@@ -77,4 +75,28 @@ public class UserController {
         return modelAndView;
     }
 */
+@RequestMapping(value="/changeUserData", method = RequestMethod.GET)
+public ModelAndView changeUserData(){
+    ModelAndView modelAndView = new ModelAndView();
+    Long id = 1L; //TODO z ciasteczka trzeba będzie odczytać id usera na razie na sztywno wpisany id
+    Optional<User> user = userService.findUserById(id);
+    if(user.isPresent()){
+        modelAndView.addObject("user", user.get());
+    }
+    modelAndView.setViewName("changeUserData");
+    return modelAndView;
+}
+
+    @RequestMapping(value = "/changeUserData", method = RequestMethod.POST)
+    public ModelAndView saveChangedUserData(@Valid User user, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("changeUserData");
+        } else {
+            userService.updateUserData(user);
+            modelAndView.addObject("successMessage", "Your data is current  !");
+            modelAndView.setViewName("changeUserData");
+        }
+        return modelAndView;
+    }
 }

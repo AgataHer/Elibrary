@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Form for changing user data</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/changingUserData.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<form th:action="@{/elibrary/index}" method="get">
+    <button class="btn btn-md btn-warning btn-block" type="Submit">IDZ DO POPRZEDNIEJ STRONY</button>
+</form>
+<br/><br/><br/><br/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form autocomplete="off" action="#" th:action="@{/changeUserData}"
+                  th:object="${user}" method="post" class="form-horizontal"
+                  role="form">
+                <h2>Formularz zmiany Twoich danych</h2>
+                <br/>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <label>Imię</label>
+                        <input type="text" th:field="*{name}" th:value="${user.name}"
+                               class="form-control" />
+                    <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                               class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <label>Nazwisko</label>
+                        <input type="text" th:field="*{lastName}"
+                               th:value="${user.lastName}" class="form-control" />
+                    <label	th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                  class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <label>Adres email</label>
+                        <input type="text" readonly th:field="*{email}" th:value="${user.email}"
+                               class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <label>Hasło</label>
+                        <input type="password" th:field="*{password}"
+                               th:value="${user.password}" class="form-control" /> <label
+                            th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <button id= "btnSave" type="submit" class="btn btn-success active" aria-pressed="true">Zapisz</button>
+                    </div>
+                </div>
+                 <span th:utext="${successMessage}"></span>
+            </form>
+        </div>
+        <div class="col-md-6"></div>
+        <img src="../images/changeUserData.jpg" class="img-fluid">
+    </div>
+    </div>
+</div>
+
+</body>
+</html>
