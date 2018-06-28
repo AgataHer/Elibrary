@@ -1,0 +1,61 @@
+button {
+    padding: 3px 20px 3px 20px;
+    margin: 10px 15px 10px 15px;
+}
+body {
+    background: url(../../images/library_mafra.jpg) no-repeat center center fixed; background-size: cover;
+}
+textarea {
+    resize: none;
+}
+.center-block {
+     float: none;
+}
+.buttons {
+    padding: 5px 10px 5px 10px;
+    background: #1b6d85;
+    color: white;
+}
+.td_data {
+    height: 10px;
+}
+.case_blk {
+    font-weight: bold;
+    color: white;
+    background: black;
+    padding: 3px 15px 3px 15px;
+    margin-left: 10px;
+    text-align: right;
+}
+.case_grn {
+    font-weight: bold;
+    color: white;
+    background: green;
+    padding: 3px 15px 3px 15px;
+    margin-left: 10px;
+    text-align: right;
+}
+.case_red {
+    font-weight: bold;
+    color: white;
+    background: red;
+    padding: 3px 15px 3px 15px;
+    margin-left: 10px;
+    text-align: right;
+}
+.case_yel {
+    font-weight: bold;
+    color: white;
+    background: yellow;
+    padding: 3px 15px 3px 15px;
+    margin-left: 10px;
+    text-align: right;
+}
+.case_blu {
+    font-weight: bold;
+    color: white;
+    background: blue;
+    padding: 3px 15px 3px 15px;
+    margin-left: 10px;
+    text-align: right;
+}
