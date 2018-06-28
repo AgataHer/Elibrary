@@ -2,6 +2,8 @@ package com.sda.library.controller;
 
 import javax.validation.Valid;
 
+import com.sda.library.model.Book;
+import com.sda.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,11 +16,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.sda.library.model.User;
 import com.sda.library.service.UserService;
 
+import java.util.List;
+
 @Controller
 public class LoginController {
 	
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private BookService bookService;
 
 	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
 	public ModelAndView login(){
@@ -74,8 +81,11 @@ public class LoginController {
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
+		List<Book> books = bookService.getBooks();
+		modelAndView.addObject("user", user);
 		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
 		modelAndView.addObject("userMessage","Content Available Only for Users");
+		modelAndView.addObject("books", books);
 		modelAndView.setViewName("elibrary/index");
 		return modelAndView;
 	}

@@ -1,34 +1,124 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+<!--<script src="/js/angular.min.js"></script>-->
+<link rel="stylesheet" type="text/css" th:href="@{/css/add_book.css}" />
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<script src="/js/jquery-3.3.1.js"></script>
+<script src="/js/bootstrap.js"></script>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=l">
     <title>eLibrary</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <style>
-        button {
-            padding: 3px 20px 3px 20px;
-            margin: 10px 15px 10px 15px; 
-        }
-        body {
-            background: url(../../images/library_mafra.jpg) no-repeat center center fixed; background-size: cover;
-        }
-        textarea {
-            resize: none;
-        }
-    </style>
 </head>
 <body>
-    <script src="/js/angular.min.js"></script>
-    <script src="/js/jquery-3.3.1.js"></script>
-    <script src="/js/bootstrap.js"></script>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<form th:action="@{/elibrary/index}" method="get">
+    <button class="btn btn-md btn-warning btn-block" type="Submit">IDŹ DO POPRZEDNIEJ STRONY</button>
+</form>
     <br/><br/><br/>
-    <div class="container" ng-app="addBook" ng-controller="addBookCtrl"  style="background: white; width: 75%; opacity: 0.9;">
+    <div class="container" style="background: white; width: 75%; opacity: 0.9;">
         <h1 class="text-center">Dodanie książki</h1>
+
+        <form autocomplete="off" action="#" th:action="@{/add_book}"
+              th:object="${book}" method="post" class="form-horizontal"
+              role="form">
+            <br/>
+            <div class="row" style="height: 40px">
+                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                    Tytuł:
+                </div>
+                <div class="col-lg-10">
+                    <input type="text" th:field="*{title}" th:value="${book.title}"
+                       class="form-control" placeholder="Wprowadź tytuł"/>
+                <label th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+                       class="validation-message"></label>
+                </div>
+            </div>
+            <div class="row" style="height: 40px">
+                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                    Podtytuł:
+                </div>
+                <div class="col-lg-10">
+                    <input type="text" th:field="*{subtitle}" th:value="${book.subtitle}" class="form-control" placeholder="Wprowadź podtytuł">
+                </div>
+            </div>
+        <!--author-->
+            <div class="row" style="height: 40px">
+                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                    Wydawca:
+                </div>
+                <div class="col-lg-10">
+                    <input type="text" th:field="*{publisher}" th:value="${book.publisher}" class="form-control" placeholder="Wprowadź wydawcę">
+                </div>
+            </div>
+            <div class="row" style="height: 40px">
+                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                    Rok wydania:
+                </div>
+                <div class="col-lg-2">
+                    <input type="number" th:field="*{publishedDate}" th:value="${book.publishedDate}" class="form-control" placeholder="Wprowadź rok wydania">
+                </div>
+            </div>
+            <div class="row" style="height: 40px">
+                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                    ISBN(13):
+                </div>
+                <div class="col-lg-2">
+                    <input type="text" th:field="*{isbn13}" th:value="${book.isbn13}" class="form-control" placeholder="Numer ISBN (13 cyfr)">
+                </div>
+                <div class="col-lg-8">
+                    <button ng-click="getBookByISBN()" class="button">Pobierz dane z internetu</button>
+                </div>
+            </div>
+            <div class="row" style="height: 40px">
+                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                    ISBN(10):
+                </div>
+                <div class="col-lg-3">
+                    <input type="text" th:field="*{isbn10}" th:value="${book.isbn10}" class="form-control" placeholder="Numer ISBN (10 cyfr)">
+                </div>
+            </div>
+            <div class="row" style="height: 40px">
+                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                    Ilość stron:
+                </div>
+                <div class="col-lg-2">
+                    <input type="number" th:field="*{pageCount}" th:value="${book.pageCount}" class="form-control" placeholder="Wprowadź ilość stron">
+                </div>
+            </div>
+            <div class="row" style="height: 40px">
+                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                    Język:
+                </div>
+                <div class="col-lg-2"> 
+                    <input type="text" th:field="*{language}" th:value="${book.language}" class="form-control" placeholder="Język tekstu (pl, en, de, itd.)">
+                </div>
+            </div>
+        <!--coverLink-->
+            <div class="row">
+                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                    Opis:
+                </div>
+                <div class="col-lg-10">
+                    <textarea type="text" th:field="*{description}" th:value="${book.description}" class="form-control" placeholder="Wprowadź opis" rows="6"></textarea>
+                </div>
+            </div>
+            <!--<div class="form-group">-->
+            <div class="row">
+                <div class="col-lg-2" style="text-align: right; padding-top: 7px"></div>
+                <div class="col-sm-10">
+                    <button id="btnSave" type="submit" class="btn btn-success active" style="margin: 10px 0px 0px 0px" aria-pressed="true">Zapisz</button>
+                    <a >
+                </div>
+            </div>
+            <span th:utext="${successMessage}"></span>
+            <br/>
+        </form>
+
+
+
+<!--
         <form novalidate>
             <div class="container">
                 <div class="row" style="height: 40px">
@@ -47,7 +137,7 @@
                         <input type="text" ng-model="book.subtitle" class="form-control" placeholder="Wprowadź podtytuł">
                     </div>
                 </div>
-            <!--author-->
+            &lt;!&ndash;author&ndash;&gt;
                 <div class="row" style="height: 40px">
                     <div class="col-lg-2" style="text-align: right; padding-top: 7px">
                         Wydawca:
@@ -99,7 +189,7 @@
                         <input type="text" ng-model="book.language" class="form-control" placeholder="Język tekstu (pl, en, de, itd.)">
                     </div>
                 </div>
-            <!--coverLink-->
+            &lt;!&ndash;coverLink&ndash;&gt;
                 <div class="row">
                     <div class="col-lg-2" style="text-align: right; padding-top: 7px">
                         Opis:
@@ -111,15 +201,19 @@
             </div>
 
             <br><br>
-            <button ng-click="add()" class="button">Dodaj</button>
-            <button ng-click="reset()">Resetuj</button>
-            <button ng-click="cancel()">Anuluj</button>
+
+            <button onclick="add()" class="button">Dodaj</button>
+            <button onclick="reset()">Resetuj</button>
+            <button onclick="cancel()">Anuluj</button>
+
     <a href="/elibrary/index" class="buttons">Rezygnuj</a>
             </form>
         <p>form = {{book}}</p>
         <p>master = {{master}}</p>
+-->
     </div>
 
+<!--
 <script>
 var app = angular.module('addBook', []);
 app.controller('addBookCtrl', function($scope) {
@@ -138,6 +232,7 @@ app.controller('addBookCtrl', function($scope) {
     // $scope.reset();
 });
 </script>
+-->
 
 </body>
 </html>

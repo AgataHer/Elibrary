@@ -14,16 +14,14 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
-    private String lastname;
+    private String fullname;
 
     @ManyToMany(mappedBy = "authors")
     private Set<Book> books;
 
 
-    public Author(String name, String lastname) {
-        this.name = name;
-        this.lastname = lastname;
+    public Author(String fullname) {
+        this.fullname = fullname;
     }
 
     public Author(){}
@@ -37,20 +35,12 @@ public class Author {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public Set<Book> giveBooks() {

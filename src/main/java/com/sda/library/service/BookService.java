@@ -103,7 +103,7 @@ public class BookService {
                             if (!itemDescription.equals(null)) {
                                 Set<Author> itemAuthorsSet = new HashSet<>();
                                 for (int k = 0; k < itemAuthors.length(); k++) {
-                                    itemAuthorsSet.add(new Author(itemAuthors.getString(k), null));
+                                    itemAuthorsSet.add(new Author(itemAuthors.getString(k)));
                                 }
                                 book.setAuthors(itemAuthorsSet);
                             }

@@ -1,108 +1,72 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" th:href="@{/css/elibrary.css}" />
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<script src="/js/jquery-3.3.1.js"></script>
+<script src="/js/bootstrap.js"></script>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=l">
     <title>eLibrary</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <style>
-        .center-block {
-            float: none;
-        }
-        .buttons {
-            padding: 5px 10px 5px 10px;
-            background: #1b6d85;
-            color: white;
-        }
-    </style>
 </head>
-<body ng-app="bookBrowser" ng-controller="booksCtrl">
-    <script src="/js/angular.min.js"></script>
-    <script src="/js/jquery-3.3.1.js"></script>
-    <script src="/js/bootstrap.js"></script>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-8 center-block">
-                <h1 class="text-center">Lista dostępnych książek eLibrary</h1>
-                <div class="text-left">Ilość pozycji w bazie danych: {{foundBooks.length}}</div>
-                <br/>
-                <div class="input-group">
-                    <span class="input-group-addon">Szukaj: </span>
-                    <input type="text" class="form-control" placeholder="Czego szukasz?" ng-model="finder">
-                </div>
-                <br/>
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th ng-repeat="header in [
-                                    'Imię', 'Narodowość', 'Miejsce', 'Punkty'
-                                    ]">
-                                    {{header}}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat='book in foundBooks | filter: finder'>
-                                <td>
-                                    {{book.Name}}
-                                </td>
-                                <td>
-                                    {{book.Nation}}
-                                </td>
-                                <td>
-                                    {{book.rank}}
-                                </td>
-                                <td>
-                                    {{book.pts}}
-                                </td>
-                            </tr>
-                        </tbody>
+<body>
+<br/><br/><br/>
+<div class="container" style="background: white; width: 75%; opacity: 0.9;">
+    <h1 class="text-center">Lista dostępnych książek eLibrary</h1>
+
+    <table class="table table-hover" style="font-weight: bold">
+        <th:block th:each="book : ${books}">
+            <tr style="text-transform: uppercase;">
+                <td rowspan="5" style="width: 15%"><img th:src="${book.coverLink}"></td> <!--<a href="/billing-app/showDetails.htm">-->
+                <td class="td" th:text="${'Tytuł: '+book.title}" colspan="2" style="width: 50%">Tytuł</td>
+                <td class="td" th:text="${'Podtytuł: '+book.subtitle}" colspan="2" style="width: 35%">Podtytuł</td>
+            </tr>
+            <tr>
+                <td th:text="${'Autorzy: '+book.getAuthors()}" style="width: 35%">Autorzy</td>
+                <td th:text="${'Wydawca: '+book.publisher}" colspan="3">Wydawca</td>
+            </tr>
+            <tr>
+                <td th:text="${'Kategorie: '+book.categories}" colspan="3">Kategoria</td>
+                <td th:text="${'Stron: '+book.pageCount}" style="width: 10%">Stron</td>
+            </tr>
+            <tr>
+                <td th:text="${'Opis: '+book.description}" colspan="4">Opis</td>
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <table>
+                        <tr>
+                            <td>
+                                <a th:if="${user.roles == 'ADMIN'}" class="buttons">
+                                    Modyfikuj dane</a>
+                                <a th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).FOR_BORROW}" href="/borrow_book" class="buttons">
+                                    Wypożycz</a>
+                                <a th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).BORROWED} or ${book.stateOfBook == T(com.sda.library.model.StateOfBook).RESERVED}"href="/reserve_book" class="buttons">
+                                    Zarezerwuj</a>
+                            </td>
+                            <td style="width: fit-content; text-wrap: avoid">
+                                <div class="case_red" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).BORROWED}">Status: WYPOŻYCZONA</div>
+                                <div class="case_grn" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).FOR_BORROW}">Status: DO WYPOŻYCZENIA</div>
+                                <div class="case_red" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).LOST}">Status: ZAGUBIONA</div>
+                                <div class="case_red" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).LOCKED}">Status: NIEDOSTĘPNA</div>
+                                <div class="case_yel" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).RESERVED}">Status: ZAREZERWOWANA</div>
+                                <div class="case_blu" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).TO_BUY}">Status: PROPOZYCJA</div>
+                            </td>
+                        </tr>
                     </table>
-                </div>
-            </div>
-        </div>
-    </div>
+                </td>
+            </tr>
+        </th:block>
+    </table>
     <div>
+        <!--<a th:if="${user.roles == 'ADMIN'}" href="/add_book" class="buttons">Dodaj książkę</a>-->
         <a href="/add_book" class="buttons">Dodaj książkę</a>
         <a href="/changeUserData" class="buttons">Moje dane</a>
-        <button ng-click="redirect()">Basic</button>
     </div>
-
-    <script>
-        var bBrowser = angular.module('bookBrowser', []);
-        bBrowser.controller('booksCtrl', ['$scope', '$filter', function($scope, $filter){
-            $scope.foundBooks = [
-{
-"Name":"FREUND Severin",
-"Nation":"GER",
-"rank":1,
-"pts":1729
-},
-{
-"Name":"PREVC Peter",
-"Nation":"SLO",
-"rank":2,
-"pts":1720
-},
-{
-"Name":"KRAFT Stefan",
-"Nation":"AUT",
-"rank":3,
-"pts":1578
-},
-{
-"Name":"FANNEMEL Anders",
-"Nation":"NOR",
-"rank":4,
-"pts":1161
-}
-]
-        }]);
-    </script>
-
+    <br/>
+</div>
 </body>
 </html>
