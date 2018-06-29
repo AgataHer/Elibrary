@@ -5,29 +5,34 @@ import com.sda.library.model.Book;
 import com.sda.library.model.Hire;
 import com.sda.library.model.User;
 import com.sda.library.repository.HireRepository;
+import com.sda.library.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class HireService {
+
     private HireRepository hireRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    public HireService(HireRepository hireRepository) {
+    public HireService(HireRepository hireRepository, UserRepository userRepository) {
         this.hireRepository = hireRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Hire> getHires(){
         return hireRepository.findAll();
     }
 
-    public Hire save(Hire hire) {
+    public Hire save(Hire hire, Book book, User user) {
         hire.setReservationDate(null);
         Long creationTime = System.currentTimeMillis();
         hire.setRentDate(creationTime);
         hire.setReturnDate(creationTime+30L);
-        hire.setUser(null); //na razie null zaraz po teście działania przypisac !!!
+        hire.setUser(userRepository.findById(user.getId()).get());
+        hire.setBook(book);
         return hireRepository.save(hire);
     }
 
