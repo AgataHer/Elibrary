@@ -16,224 +16,116 @@
 <form th:action="@{/elibrary/index}" method="get">
     <button class="btn btn-md btn-warning btn-block" type="Submit">IDŹ DO POPRZEDNIEJ STRONY</button>
 </form>
-    <br/><br/><br/>
-    <div class="container" style="background: white; width: 75%; opacity: 0.9;">
-        <h1 class="text-center">Dodanie książki</h1>
+<br/><br/>
+<div class="container" style="background: white; width: 75%; opacity: 0.9;">
+    <h1 class="text-center">Dodanie książki</h1>
 
-        <form autocomplete="off" action="#" th:action="@{/add_book}"
-              th:object="${book}" method="post" class="form-horizontal"
-              role="form">
-            <br/>
-            <div class="row" style="height: 40px">
-                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                    Tytuł:
-                </div>
-                <div class="col-lg-10">
-                    <input type="text" th:field="*{title}" th:value="${book.title}"
+    <form autocomplete="off" action="#" th:action="@{/add_book}"
+          th:object="${book}" method="post" class="form-horizontal"
+          role="form">
+        <br/>
+        <div class="row" style="height: 40px">
+            <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                Tytuł:
+            </div>
+            <div class="col-lg-10">
+                <input type="text" th:field="*{title}" th:value="${book.title}"
                        class="form-control" placeholder="Wprowadź tytuł"/>
                 <label th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
                        class="validation-message"></label>
-                </div>
             </div>
-            <div class="row" style="height: 40px">
-                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                    Podtytuł:
-                </div>
-                <div class="col-lg-10">
-                    <input type="text" th:field="*{subtitle}" th:value="${book.subtitle}" class="form-control" placeholder="Wprowadź podtytuł">
-                </div>
+        </div>
+        <div class="row" style="height: 40px">
+            <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                Podtytuł:
             </div>
+            <div class="col-lg-10">
+                <input type="text" th:field="*{subtitle}" th:value="${book.subtitle}" class="form-control" placeholder="Wprowadź podtytuł">
+            </div>
+        </div>
         <!--author-->
-            <div class="row" style="height: 40px">
-                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                    Wydawca:
-                </div>
-                <div class="col-lg-10">
-                    <input type="text" th:field="*{publisher}" th:value="${book.publisher}" class="form-control" placeholder="Wprowadź wydawcę">
-                </div>
+        <div class="row" style="height: 40px">
+            <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                Wydawca:
             </div>
-            <div class="row" style="height: 40px">
-                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                    Rok wydania:
-                </div>
-                <div class="col-lg-2">
-                    <input type="number" th:field="*{publishedDate}" th:value="${book.publishedDate}" class="form-control" placeholder="Wprowadź rok wydania">
-                </div>
+            <div class="col-lg-10">
+                <input type="text" th:field="*{publisher}" th:value="${book.publisher}" class="form-control" placeholder="Wprowadź wydawcę">
             </div>
-            <div class="row" style="height: 40px">
-                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                    ISBN(13):
-                </div>
-                <div class="col-lg-2">
-                    <input type="text" th:field="*{isbn13}" th:value="${book.isbn13}" class="form-control" placeholder="Numer ISBN (13 cyfr)">
-                </div>
-                <div class="col-lg-8">
-                    <button ng-click="getBookByISBN()" class="button">Pobierz dane z internetu</button>
-                </div>
+        </div>
+        <div class="row" style="height: 40px">
+            <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                Rok wydania:
             </div>
-            <div class="row" style="height: 40px">
-                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                    ISBN(10):
-                </div>
-                <div class="col-lg-3">
-                    <input type="text" th:field="*{isbn10}" th:value="${book.isbn10}" class="form-control" placeholder="Numer ISBN (10 cyfr)">
-                </div>
+            <div class="col-lg-2">
+                <input type="number" th:field="*{publishedDate}" th:value="${book.publishedDate}" class="form-control" placeholder="Wprowadź rok wydania">
             </div>
-            <div class="row" style="height: 40px">
-                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                    Ilość stron:
-                </div>
-                <div class="col-lg-2">
-                    <input type="number" th:field="*{pageCount}" th:value="${book.pageCount}" class="form-control" placeholder="Wprowadź ilość stron">
-                </div>
+        </div>
+        <div class="row" style="height: 40px">
+            <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                ISBN(13):
             </div>
-            <div class="row" style="height: 40px">
-                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                    Język:
-                </div>
-                <div class="col-lg-2"> 
-                    <input type="text" th:field="*{language}" th:value="${book.language}" class="form-control" placeholder="Język tekstu (pl, en, de, itd.)">
-                </div>
+            <div class="col-lg-2">
+                <input type="text" onchange="isbn13Change" th:id="isbn13from" th:field="*{isbn13}" th:value="${book.isbn13}" class="form-control" placeholder="Numer ISBN (13 cyfr)">
             </div>
+            <div class="col-lg-8">
+                <button class="button" th:id="findBookFromisbn13">Pobierz dane z internetu</button>
+                <script>
+                    function isbn13Change(){
+                        var str = document.getElementById("isbn13from").value;
+                        if (str.length(13)) {
+                            document.getElementsByTagName('input').style.visibility = visible;
+                        } else {
+                            document.getElementsByTagName('input').style.visibility = hidden;
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+        <div class="row" style="height: 40px">
+            <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                ISBN(10):
+            </div>
+            <div class="col-lg-3">
+                <input type="text" th:field="*{isbn10}" th:value="${book.isbn10}" class="form-control" placeholder="Numer ISBN (10 cyfr)">
+            </div>
+        </div>
+        <div class="row" style="height: 40px">
+            <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                Ilość stron:
+            </div>
+            <div class="col-lg-2">
+                <input type="number" th:field="*{pageCount}" th:value="${book.pageCount}" class="form-control" placeholder="Wprowadź ilość stron">
+            </div>
+        </div>
+        <div class="row" style="height: 40px">
+            <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                Język:
+            </div>
+            <div class="col-lg-2">
+                <input type="text" th:field="*{language}" th:value="${book.language}" class="form-control" placeholder="Język tekstu (pl, en, de, itd.)">
+            </div>
+        </div>
         <!--coverLink-->
-            <div class="row">
-                <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                    Opis:
-                </div>
-                <div class="col-lg-10">
-                    <textarea type="text" th:field="*{description}" th:value="${book.description}" class="form-control" placeholder="Wprowadź opis" rows="6"></textarea>
-                </div>
+        <div class="row">
+            <div class="col-lg-2" style="text-align: right; padding-top: 7px">
+                Opis:
             </div>
-            <!--<div class="form-group">-->
-            <div class="row">
-                <div class="col-lg-2" style="text-align: right; padding-top: 7px"></div>
-                <div class="col-sm-10">
-                    <button id="btnSave" type="submit" class="btn btn-success active" style="margin: 10px 0px 0px 0px" aria-pressed="true">Zapisz</button>
-                    <a >
-                </div>
+            <div class="col-lg-10">
+                <textarea type="text" th:field="*{description}" th:value="${book.description}" class="form-control" placeholder="Wprowadź opis" rows="6"></textarea>
             </div>
-            <span th:utext="${successMessage}"></span>
-            <br/>
-        </form>
-
-
-
-<!--
-        <form novalidate>
-            <div class="container">
-                <div class="row" style="height: 40px">
-                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                        Tytuł:
-                    </div>
-                    <div class="col-lg-10">
-                        <input type="text" ng-model="book.title" class="form-control" placeholder="Wprowadź tytuł">
-                    </div>
-                </div>
-                <div class="row" style="height: 40px">
-                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                        Podtytuł:
-                    </div>
-                    <div class="col-lg-10">
-                        <input type="text" ng-model="book.subtitle" class="form-control" placeholder="Wprowadź podtytuł">
-                    </div>
-                </div>
-            &lt;!&ndash;author&ndash;&gt;
-                <div class="row" style="height: 40px">
-                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                        Wydawca:
-                    </div>
-                    <div class="col-lg-10">
-                        <input type="text" ng-model="book.publisher" class="form-control" placeholder="Wprowadź wydawcę">
-                    </div>
-                </div>
-                <div class="row" style="height: 40px">
-                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                        Rok wydania:
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="number" ng-model="book.publishedDate" class="form-control" placeholder="Wprowadź rok wydania">
-                    </div>
-                </div>
-                <div class="row" style="height: 40px">
-                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                        ISBN(13):
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="text" ng-model="book.isbn13" class="form-control" placeholder="Numer ISBN (13 cyfr)">
-                    </div>
-                    <div class="col-lg-8">
-                        <button ng-click="getBookByISBN()" class="button">Pobierz dane z internetu</button>
-                    </div>
-                </div>
-                <div class="row" style="height: 40px">
-                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                        ISBN(10):
-                    </div>
-                    <div class="col-lg-3">
-                        <input type="text" ng-model="book.isbn10" class="form-control" placeholder="Numer ISBN (10 cyfr)">
-                    </div>
-                </div>
-                <div class="row" style="height: 40px">
-                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                        Ilość stron:
-                    </div>
-                    <div class="col-lg-2">
-                        <input type= "number" ng-model="book.pageCount" class="form-control" placeholder="Wprowadź ilość stron">
-                    </div>
-                </div>
-                <div class="row" style="height: 40px">
-                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                        Język:
-                    </div>
-                    <div class="col-lg-2">
-                        <input type="text" ng-model="book.language" class="form-control" placeholder="Język tekstu (pl, en, de, itd.)">
-                    </div>
-                </div>
-            &lt;!&ndash;coverLink&ndash;&gt;
-                <div class="row">
-                    <div class="col-lg-2" style="text-align: right; padding-top: 7px">
-                        Opis:
-                    </div>
-                    <div class="col-lg-10">
-                        <textarea type="text" ng-model="book.description" class="form-control" placeholder="Wprowadź opis" rows="6"></textarea>
-                    </div>
-                </div>
+        </div>
+        <!--<div class="form-group">-->
+        <div class="row">
+            <div class="col-lg-2" style="text-align: right; padding-top: 7px"></div>
+            <div class="col-sm-10">
+                <button id="btnSave" type="submit" class="btn btn-success active" style="margin: 10px 0px 0px 0px" aria-pressed="true">Zapisz</button>
+                <a >
             </div>
-
-            <br><br>
-
-            <button onclick="add()" class="button">Dodaj</button>
-            <button onclick="reset()">Resetuj</button>
-            <button onclick="cancel()">Anuluj</button>
-
-    <a href="/elibrary/index" class="buttons">Rezygnuj</a>
-            </form>
-        <p>form = {{book}}</p>
-        <p>master = {{master}}</p>
--->
-    </div>
-
-<!--
-<script>
-var app = angular.module('addBook', []);
-app.controller('addBookCtrl', function($scope) {
-    $scope.master = {title: "Pan Tadeusz", subtitle: "Ostatni zajazd na Litwie", stateOfBook: "Do wypożyczenia", publisher: "Zakład Narodowy im. Ossolińskich", publishedDate: 1980, isbn10: "8304004461", isbn13: "9788304004467", pageCount: 647, language: "pl", description: "Pan Tadeusz, czyli Ostatni zajazd na Litwie – poemat epicki Adama Mickiewicza wydany w dwóch tomach w 1834 w Paryżu przez Aleksandra Jełowickiego. Ta epopeja narodowa z elementami gawędy szlacheckiej powstała w latach 1832–1834 w Paryżu. Składa się z dwunastu ksiąg pisanych wierszem, trzynastozgłoskowym aleksandrynem polskim. Czas akcji: pięć dni z roku 1811 i dwa dni z roku 1812. Epopeja jest stałą pozycją na polskiej liście lektur szkolnych. W 2012 była publicznie odczytywana w akcji społecznej propagującej znajomość literatury polskiej Narodowe Czytanie Pana Tadeusza. W 2014 roku rękopis „Pana Tadeusza” został wpisany na Polską Listę Krajową Programu UNESCO Pamięć Świata"};
-    $scope.states = ["Wypożyczona", "Do wypożyczenia", "Zagubiona", "Niedostępna", "Zarezerwowana", "Propozycja"];
-    $scope.add = function() {
-        // $scope.book = angular.copy($scope.master);
-    };
-    $scope.reset = function() {
-        $scope.book = angular.copy($scope.master);
-    };
-    $scope.cancel = function() {
-        // book.language="pl";
-        $location.url(/elibrary/index.html);
-    };
-    // $scope.reset();
-});
-</script>
--->
-
+        </div>
+        <span th:utext="${successMessage}"></span>
+        <br/>
+    </form>
+</div>
 </body>
 </html>
 

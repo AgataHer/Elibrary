@@ -12,24 +12,31 @@
     <title>eLibrary</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 </head>
-<body>
+<body th:object="${user}">
 <br/><br/><br/>
 <div class="container" style="background: white; width: 75%; opacity: 0.9;">
-    <h1 class="text-center">Lista dostępnych książek eLibrary</h1>
+    <h4>
+        <span class="userPresentation" th:text="${'Użytkownik: '+user.name+' '+user.lastName+', '}"></span>
+        <span class="userPresentation" th:each="role : ${user.getRoles()}"><span th:text="${role.role}"></span></span>
+        <a id="logout" href="/logout" class="logout">Wyloguj</a>
 
+    </h4>
+    <h1 class="text-center">Lista dostępnych książek eLibrary</h1>
     <table class="table table-hover" style="font-weight: bold">
         <th:block th:each="book : ${books}">
             <tr style="text-transform: uppercase;">
-                <td rowspan="5" style="width: 15%"><img th:src="${book.coverLink}"></td> <!--<a href="/billing-app/showDetails.htm">-->
+                <td rowspan="5" style="width: 15%"><img th:src="${book.coverLink}"></td>
                 <td class="td" th:text="${'Tytuł: '+book.title}" colspan="2" style="width: 50%">Tytuł</td>
                 <td class="td" th:text="${'Podtytuł: '+book.subtitle}" colspan="2" style="width: 35%">Podtytuł</td>
             </tr>
             <tr>
-                <td th:text="${'Autorzy: '+book.getAuthors()}" style="width: 35%">Autorzy</td>
-                <td th:text="${'Wydawca: '+book.publisher}" colspan="3">Wydawca</td>
+                <td th:each="author : ${book.getAuthors()}" style="width: 35%">Autorzy: <span th:text="${author.fullname+', '}"></span></td>
+                <!--<td th:text="${'Autorzy: '+book.getAuthors()}" style="width: 35%">Autorzy</td>-->
+                <td th:text="${'Wydawca: '+book.publisher.name}" colspan="3">Wydawca</td>
             </tr>
             <tr>
-                <td th:text="${'Kategorie: '+book.categories}" colspan="3">Kategoria</td>
+                <td th:each="category : ${book.categories}" colspan="3">Kategorie: <span th:text="${category.name}+', '"></span></td>
+                <!--<td th:text="${'Kategorie: '+book.categories}" colspan="3">Kategoria</td>-->
                 <td th:text="${'Stron: '+book.pageCount}" style="width: 10%">Stron</td>
             </tr>
             <tr>
@@ -42,10 +49,14 @@
                             <td>
                                 <a th:if="${user.roles == 'ADMIN'}" class="buttons">
                                     Modyfikuj dane</a>
-                                <a th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).FOR_BORROW}" href="/borrow_book" class="buttons">
+                                <a th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).FOR_BORROW}" th:href="${'/borrow_book/'+book.id}" class="buttons">
                                     Wypożycz</a>
-                                <a th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).BORROWED} or ${book.stateOfBook == T(com.sda.library.model.StateOfBook).RESERVED}"href="/reserve_book" class="buttons">
+                                <a th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).BORROWED} or ${book.stateOfBook == T(com.sda.library.model.StateOfBook).RESERVED}" th:href="${'/reserve_book/'+book.id}" class="buttons">
                                     Zarezerwuj</a>
+<!--
+                                <a th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).FOR_BORROW} or ${book.stateOfBook == T(com.sda.library.model.StateOfBook).LOST} or ${book.stateOfBook == T(com.sda.library.model.StateOfBook).TO_BUY}" th:href="${'/remove_book/'+book.id}" class="buttons">
+                                    Usuń</a>
+-->
                             </td>
                             <td style="width: fit-content; text-wrap: avoid">
                                 <div class="case_red" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).BORROWED}">Status: WYPOŻYCZONA</div>
@@ -62,8 +73,7 @@
         </th:block>
     </table>
     <div>
-        <!--<a th:if="${user.roles == 'ADMIN'}" href="/add_book" class="buttons">Dodaj książkę</a>-->
-        <a href="/add_book" class="buttons">Dodaj książkę</a>
+        <a th:if="${(user.roles[0].role == 'ADMIN')}" id="addBookLink" href="/add_book" class="buttons">Dodaj książkę</a>
         <a href="/changeUserData" class="buttons">Moje dane</a>
     </div>
     <br/>

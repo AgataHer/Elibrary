@@ -34,6 +34,8 @@ public class BookService {
         return bookRepository.save(book);
     }
 
+    public void delete(Book book) { bookRepository.delete(book); }
+
     public Book getBookById(Long id) {
 
         Book book = bookRepository.findById(id).orElseThrow(
@@ -166,7 +168,6 @@ public class BookService {
         }
         return book;
     }
-
 
     // TODO - poniższa metoda ostatecznie do usunięcia - metoda pozwala na wykonanie szybkich testów ręcznych
     public static void main(String[] args) {
