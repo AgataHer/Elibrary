@@ -23,6 +23,11 @@ public class HireService {
     }
 
     public Hire save(Hire hire) {
+        hire.setReservationDate(null);
+        Long creationTime = System.currentTimeMillis();
+        hire.setRentDate(creationTime);
+        hire.setReturnDate(creationTime+30L);
+        hire.setUser(null); //na razie null zaraz po teście działania przypisac !!!
         return hireRepository.save(hire);
     }
 

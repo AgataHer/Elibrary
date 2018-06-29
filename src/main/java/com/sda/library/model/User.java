@@ -21,7 +21,6 @@ import org.springframework.data.annotation.Transient;
 @Entity
 @Table(name = "users")
 public class User {
-	public static final String USER_SESSION = "mySessionCookie";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
