@@ -1,10 +1,7 @@
 package com.sda.library.service;
 
 import com.sda.library.exception.BookNotFoundException;
-import com.sda.library.model.Author;
-import com.sda.library.model.Book;
-import com.sda.library.model.Category;
-import com.sda.library.model.Publisher;
+import com.sda.library.model.*;
 import com.sda.library.repository.BookRepository;
 import com.sda.library.utils.JsonUtils;
 import org.json.JSONArray;
@@ -183,7 +180,7 @@ public class BookService {
         if (book.getJsonInfo().length() > 255) {
             book.setJsonInfo(null);
         }
-
+        book.setStateOfBook(StateOfBook.FOR_BORROW);
         book = save(book);
         return book;
     }
@@ -192,4 +189,27 @@ public class BookService {
     public static void main(String[] args) {
         Book book = getBookByIsbnFromWeb("9780262140874");
     }
+
+    public void updateBookData(Book book) {
+        book.setStateOfBook(StateOfBook.RESERVED);
+        bookRepository.setBookDataById(book.getStateOfBook(), book.getId());
+    }
+    //    public boolean makeReservation(Book book, User user){
+//        boolean MadeAReservationPositively = false;
+//        if (book.getStateOfBook().equals("BORROWED")|| book.getStateOfBook().equals("RESERVED")){
+//            Long howMuchUsersAreInQueue = hireRepository.findAll().stream()
+//                    .filter(h->h.getBook().equals(book))
+//                    .filter(h->h.getRentDate().equals(null))
+//                    .count();
+//            if (howMuchUsersAreInQueue<3) {
+//                Hire hire = new Hire();
+//                hire.setBook(book);
+//                hire.setUser(user);
+//                hire.setReservationDate(System.currentTimeMillis());
+//
+//                MadeAReservationPositively = true;
+//            }
+//        }
+////        return MadeAReservationPositively;
+//    }
 }

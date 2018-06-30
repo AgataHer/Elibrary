@@ -44,22 +44,22 @@ public class HireService {
         );
         return hire;
     }
-//    public boolean makeReservation(Book book, User user){
-//        boolean MadeAReservationPositively = false;
-//        if (book.getStateOfBook().equals("BORROWED")|| book.getStateOfBook().equals("RESERVED")){
-//            Long howMuchUsersAreInQueue = hireRepository.findAll().stream()
-//                    .filter(h->h.getBook().equals(book))
-//                    .filter(h->h.getRentDate().equals(null))
-//                    .count();
-//            if (howMuchUsersAreInQueue<3) {
-//                Hire hire = new Hire();
-//                hire.setBook(book);
-//                hire.setUser(user);
-//                hire.setReservationDate(System.currentTimeMillis());
-//
-//                MadeAReservationPositively = true;
-//            }
-//        }
-////        return MadeAReservationPositively;
-//    }
+
+    public boolean makeReservation(Book book, User user){
+        boolean MadeAReservationPositively = false;
+            Long howMuchUsersAreInQueue = hireRepository.findAll().stream()
+                    .filter(h->h.getBook().equals(book))
+                    .filter(h->h.getRentDate().equals(null))
+                    .count();
+            if (howMuchUsersAreInQueue<3) {
+                Hire hire = new Hire();
+                hire.setBook(book);
+                hire.setUser(user);
+                hire.setReservationDate(System.currentTimeMillis());
+                hireRepository.save(hire);
+
+                MadeAReservationPositively = true;
+            }
+        return MadeAReservationPositively;
+    }
 }

@@ -21,13 +21,15 @@ public class BookController {
 
     private BookService bookService;
     private UserService userService;
+    private HireService hireService;
 
 
     @Autowired
     public BookController(BookService bookService, UserService userService, PublisherService publisherService,
-                          CategoryService categoryService, AuthorService authorService) {
+                          CategoryService categoryService, AuthorService authorService, HireService hireService) {
         this.bookService = bookService;
         this.userService = userService;
+        this.hireService = hireService;
     }
 
     @RequestMapping(value = "/books"/*, method = RequestMethod.GET*/)
@@ -87,5 +89,15 @@ public class BookController {
         modelAndView.setViewName("elibrary/index");
         return modelAndView;
     }
-
+    @RequestMapping(value="/reserve_book/{id}", method = RequestMethod.GET)
+    public ModelAndView reservedBook(@PathVariable("id") Long id){
+        ModelAndView modelAndView = new ModelAndView();
+        Book book = bookService.getBookById(id);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        bookService.updateBookData(book);
+        hireService.makeReservation(book, user);
+        modelAndView.setViewName("elibrary/index");
+        return modelAndView;
+    }
 }
