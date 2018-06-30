@@ -54,24 +54,29 @@ public class HireController {
         ModelAndView modelAndView = new ModelAndView();
         Book book = bookService.getBookById(id);
             modelAndView.addObject("book", book);
-            User user = new User();
-            modelAndView.addObject("user", user);
         modelAndView.setViewName("elibrary/borrowBook");
         return modelAndView;
     }
-//    @RequestMapping(value = "/borrow_book/{id}", method = RequestMethod.POST)
-//    public ModelAndView methodToGetBookIdAndNextCreateBookHire(@PathVariable("id") Long id, @Valid User user, BindingResult bindingResult) {
+    @RequestMapping(value = "/borrow_book/{id}", method = RequestMethod.POST)
+    public ModelAndView methodToGetBookIdAndNextCreateBookHire(@PathVariable("id") Long bookId, String userId) {
+        ModelAndView modelAndView = new ModelAndView();
+            Long Id = Long.valueOf(userId);
+            Book book = bookService.getBookById(bookId);
+            Hire hire = new Hire();
+            hireService.save(hire, book, Id);
+            modelAndView.addObject("book", book);
+            modelAndView.addObject("successMessage", "Książka została wypożyczona  !");
+            modelAndView.setViewName("elibrary/borrowBook");
+        return modelAndView;
+    }
+//    @RequestMapping(value="/reserve_book/{id}", method = RequestMethod.GET)
+//    public ModelAndView deleteBook(@PathVariable("id") Long id){
 //        ModelAndView modelAndView = new ModelAndView();
-//        if (bindingResult.hasErrors()) {
-//            modelAndView.setViewName("elibrary/index");
-//        } else {
-//            Book book = bookService.getBookById(id);
-//            Hire hire = new Hire();
-//            hireService.save(hire, book, user);
-//            modelAndView.addObject("successMessage", "Książka została wypożyczona  !");
-//            modelAndView.addObject("hire", new Hire());
-//            modelAndView.setViewName("elibrary/borrowBook");
-//        }
+//        Book book = bookService.getBookById(id);
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        User user = userService.findUserByEmail(auth.getName());
+//
+//        modelAndView.setViewName("elibrary/index");
 //        return modelAndView;
 //    }
 }

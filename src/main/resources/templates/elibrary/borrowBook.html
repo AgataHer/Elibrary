@@ -25,13 +25,13 @@
             <span class="bookToBorrow" th:text="${'Wypożyczana książka: '  + book.title + ' ,    ' + book.subtitle + ' .'}"></span>
                         </h4>
                             <br/><br/><br/>
-            <form autocomplete="off" action="#" th:action="@{/borrow_book/{id}}"
-                   th:object="${user}" method="post" class="form-horizontal"
+            <form autocomplete="off" action="#" th:action="@{'/borrow_book/' + ${book.id}}"
+                  method="post" class="form-horizontal"
                    role="form">
                 <div class="form-group">
                     <div class="col-sm-10">
                         <label>Użytkownik wypożyczający</label>
-                        <input name="userId" type="number" th:field="*{id}"
+                        <input name="userId" type="text"
                                placeholder="Wprowadź ID użytkownika" class="form-control" />
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                         <button id= "btnBorrow" type="submit" class="btn btn-success active" aria-pressed="true">Wypożycz</button>
                     </div>
                 </div>
-                 <!--<span th:utext="${successMessage}"></span>-->
+                 <span th:utext="${successMessage}"></span>
             </form>
         </div>
     <div class="col-md-2">
