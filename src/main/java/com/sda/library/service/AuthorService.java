@@ -54,7 +54,7 @@ public class AuthorService {
             if (author != null){
                 authorsUnique.add(author);
             } else {
-                author = save(author);
+                author = save(a);
                 authorsUnique.add(author);
             }
         });
