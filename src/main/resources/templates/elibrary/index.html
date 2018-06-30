@@ -11,60 +11,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=l">
     <title>eLibrary</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Archivo&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 </head>
 <body th:object="${user}">
 <br/><br/><br/>
 <div class="container" style="background: white; width: 75%; opacity: 0.9;">
-    <h4>
+    <h4 class="text-right">
         <span class="userPresentation" th:text="${'Użytkownik: '+user.name+' '+user.lastName+', '}"></span>
         <span class="userPresentation" th:each="role : ${user.getRoles()}"><span th:text="${role.role}"></span></span>
         <a id="logout" href="/logout" class="logout">Wyloguj</a>
-
     </h4>
     <h1 class="text-center">Lista dostępnych książek eLibrary</h1>
     <table class="table table-hover" style="font-weight: bold">
         <th:block th:each="book : ${books}">
             <tr style="text-transform: uppercase;">
                 <td rowspan="5" style="width: 15%"><img th:src="${book.coverLink}"></td>
-                <td class="td" th:text="${'Tytuł: '+book.title}" colspan="2" style="width: 50%">Tytuł</td>
-                <td class="td" th:text="${'Podtytuł: '+book.subtitle}" colspan="2" style="width: 35%">Podtytuł</td>
+                <td class="td td_font" th:text="${'Tytuł: '+book.title}" colspan="2" style="width: 50%">Tytuł</td>
+                <td class="td td_font" th:text="${'Podtytuł: '+book.subtitle}" colspan="2" style="width: 35%">Podtytuł</td>
             </tr>
             <tr>
-                <td th:each="author : ${book.getAuthors()}" style="width: 35%">Autorzy: <span th:text="${author.fullname+', '}"></span></td>
+                <td class="td td_font" th:each="author : ${book.getAuthors()}" style="width: 35%">Autorzy: <span th:text="${author.fullname+', '}"></span></td>
                 <!--<td th:text="${'Autorzy: '+book.getAuthors()}" style="width: 35%">Autorzy</td>-->
-                <td th:text="${'Wydawca: '+book.publisher.name}" colspan="3">Wydawca</td>
+                <td class="td td_font" colspan="3" th:text="'Wydawca: ' + ( (${book.publisher} == null) ? 'nieznany' : ${book.publisher.name})"></td>
             </tr>
             <tr>
-                <td th:each="category : ${book.categories}" colspan="3">Kategorie: <span th:text="${category.name}+', '"></span></td>
+                <td class="td td_font" th:each="category : ${book.categories}" colspan="3">Kategorie: <span th:text="${category.name}+', '"></span></td>
                 <!--<td th:text="${'Kategorie: '+book.categories}" colspan="3">Kategoria</td>-->
-                <td th:text="${'Stron: '+book.pageCount}" style="width: 10%">Stron</td>
+                <td class="td td_font" th:text="${'Stron: '+book.pageCount}" style="width: 10%">Stron</td>
             </tr>
             <tr>
-                <td th:text="${'Opis: '+book.description}" colspan="4">Opis</td>
+                <td class="td td_font" th:text="${'Opis: '+book.description}" colspan="4">Opis</td>
             </tr>
             <tr>
                 <td colspan="4">
                     <table>
                         <tr>
                             <td>
-                                <a th:if="${user.roles == 'ADMIN'}" class="buttons">
+                                <a class="buttons td_font"th:if="${user.roles == 'ADMIN'}">
                                     Modyfikuj dane</a>
-                                <a th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).FOR_BORROW}" th:href="${'/borrow_book/'+book.id}" class="buttons">
+                                <a class="buttons td_font" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).FOR_BORROW}" th:href="${'/borrow_book/'+book.id}">
                                     Wypożycz</a>
-                                <a th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).BORROWED} or ${book.stateOfBook == T(com.sda.library.model.StateOfBook).RESERVED}" th:href="${'/reserve_book/'+book.id}" class="buttons">
+                                <a class="buttons td_font" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).BORROWED} or ${book.stateOfBook == T(com.sda.library.model.StateOfBook).RESERVED}" th:href="${'/reserve_book/'+book.id}">
                                     Zarezerwuj</a>
-<!--
-                                <a th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).FOR_BORROW} or ${book.stateOfBook == T(com.sda.library.model.StateOfBook).LOST} or ${book.stateOfBook == T(com.sda.library.model.StateOfBook).TO_BUY}" th:href="${'/remove_book/'+book.id}" class="buttons">
+                                <a class="buttons td_font" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).FOR_BORROW} or ${book.stateOfBook == T(com.sda.library.model.StateOfBook).LOST} or ${book.stateOfBook == T(com.sda.library.model.StateOfBook).TO_BUY}" th:href="${'/remove_book/'+book.id}">
                                     Usuń</a>
--->
                             </td>
                             <td style="width: fit-content; text-wrap: avoid">
-                                <div class="case_red" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).BORROWED}">Status: WYPOŻYCZONA</div>
-                                <div class="case_grn" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).FOR_BORROW}">Status: DO WYPOŻYCZENIA</div>
-                                <div class="case_red" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).LOST}">Status: ZAGUBIONA</div>
-                                <div class="case_red" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).LOCKED}">Status: NIEDOSTĘPNA</div>
-                                <div class="case_yel" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).RESERVED}">Status: ZAREZERWOWANA</div>
-                                <div class="case_blu" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).TO_BUY}">Status: PROPOZYCJA</div>
+                                <div class="case_red td_font" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).BORROWED}">Status: WYPOŻYCZONA</div>
+                                <div class="case_grn td_font" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).FOR_BORROW}">Status: DO WYPOŻYCZENIA</div>
+                                <div class="case_red td_font" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).LOST}">Status: ZAGUBIONA</div>
+                                <div class="case_red td_font" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).LOCKED}">Status: NIEDOSTĘPNA</div>
+                                <div class="case_yel td_font" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).RESERVED}">Status: ZAREZERWOWANA</div>
+                                <div class="case_blu td_font" th:if="${book.stateOfBook == T(com.sda.library.model.StateOfBook).TO_BUY}">Status: PROPOZYCJA</div>
                             </td>
                         </tr>
                     </table>
@@ -73,8 +71,8 @@
         </th:block>
     </table>
     <div>
-        <a th:if="${(user.roles[0].role == 'ADMIN')}" id="addBookLink" href="/add_book" class="buttons">Dodaj książkę</a>
-        <a href="/changeUserData" class="buttons">Moje dane</a>
+        <a class="buttons td_font" th:if="${(user.roles[0].role == 'ADMIN')}" id="addBookLink" href="/add_book">Dodaj książkę</a>
+        <a class="buttons td_font" href="/changeUserData">Moje dane</a>
     </div>
     <br/>
 </div>

@@ -28,6 +28,9 @@ textarea {
 .td_data {
     height: 10px;
 }
+.td_font {
+    font-family: 'Archivo', sans-serif;
+}
 .case_blk {
     font-weight: bold;
     color: white;
